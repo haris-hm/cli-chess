@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Board {
     private ArrayList<ChessPiece> activePieces;
@@ -11,6 +9,10 @@ public class Board {
         lostPieces = new ArrayList<ChessPiece>();
     }
 
+    /**
+     * Generates the starting chess board
+     * @return An ArrayList containing all the starting pieces placed at their starting positions
+     */
     private ArrayList<ChessPiece> generateStartingBoard() {
         ArrayList<ChessPiece> board = new ArrayList<ChessPiece>();
 
@@ -43,6 +45,9 @@ public class Board {
         return board;
     }
 
+    /**
+     * A string representation of the chessboard using ASCII box and shading characters
+     */
     public String toString() {
         String boardRepresentation = "";
         ChessPiece[][] pieces = new ChessPiece[8][8];
@@ -87,9 +92,9 @@ public class Board {
 
     /**
      * 
-     * @param isBlack
+     * @param isBlack If the current play is for black or white
      */
-    public void play(String input, boolean isBlack) throws InputMismatchException {
+    public void play(String input, boolean isBlack) throws IncorrectChessInputException {
         int[] desiredPiece = parseInput(input);
         ChessPiece chosenPiece;
 
@@ -106,27 +111,27 @@ public class Board {
      * @param coord Takes in the user's inputted coordinate (i.e. 'E4').
      * @return Returns the corresponding numerical value for the input in an integer[] (i.e. [5, 4] for 'E4').
      */
-    private int[] parseInput(String coord) throws InputMismatchException {
+    private int[] parseInput(String coord) throws IncorrectChessInputException {
         int[] coordinates = new int[2];
 
         if (coord.length() > 2) {
-            throw new InputMismatchException("Coordinate that was inputted is not in the correct format.");
+            throw new IncorrectChessInputException("Coordinate that was inputted is not in the correct format.");
         }
 
         try {
             coordinates[0] = coord.charAt(0) - 'A' + 1; // Grabs the first character, and converts it from a letter to its numerical value
             coordinates[1] = Integer.parseInt("" + coord.charAt(1)); // Grabs the second character, which will always be a number
         }
-        catch (NumberFormatException e) {
-            throw new InputMismatchException("Coordinate that was inputted is not in the correct format.");
+        catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+            throw new IncorrectChessInputException("Coordinate that was inputted is not in the correct format.");
         }
 
         // Checking to see if the letter and the number are in the range of A-H and 1-8
         if (coordinates[0] <= 1 || coordinates[0] >= 8){
-            throw new InputMismatchException("Coordinate that was inputted is out of bounds.");
+            throw new IncorrectChessInputException("Coordinate that was inputted is out of bounds.");
         }
         else if (coordinates[1] <= 1 || coordinates[1] >= 8) {
-            throw new InputMismatchException("Coordinate that was inputted is out of bounds.");
+            throw new IncorrectChessInputException("Coordinate that was inputted is out of bounds.");
         }
 
         return coordinates;

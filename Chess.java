@@ -6,24 +6,29 @@ public class Chess {
         Board board = new Board();
         Scanner keyboard = new Scanner(System.in);
 
-        //System.out.println('D'-'A'+1);
-        
+        boolean gameActive = true;
+        boolean isBlacksTurn = false;
 
-        board.getActivePieces().get(0).movePiece(4, 6);
-        board.getActivePieces().get(1).movePiece(3, 6);
-        System.out.println(board);
-
-        while (true) {
+        while (gameActive) {
             System.out.println(board);
-            System.out.println("Please select a piece by typing its board coordinate (i.e. 'E4'):");
+            System.out.println("Please select a piece by typing its board coordinate (i.e. 'E4') or type \"Q\" to quit the game:");
+
             String selectedCoord = keyboard.nextLine();
 
+            if (selectedCoord.equals("Q")) {
+                keyboard.close();
+                gameActive = false;
+                break;
+            }
+
             try {
-                board.play(selectedCoord, false);
+                board.play(selectedCoord, isBlacksTurn);
             }
-            catch (InputMismatchException e) {
-                System.out.println(e);
+            catch (IncorrectChessInputException e) {
+                System.out.println(e.getMessage());
             }
-        }        
+
+            isBlacksTurn = !isBlacksTurn;
+        }
     }
 }
