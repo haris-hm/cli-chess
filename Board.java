@@ -91,8 +91,8 @@ public class Board {
     }
 
     /**
-     * 
-     * @param isBlack If the current play is for black or white
+     * The main method for moving and capturing pieces. Selects the piece to be moved.
+     * @param isBlack If the current play is for black or white.
      */
     public void play(String input, boolean isBlack) throws IncorrectChessInputException {
         int[] desiredPiece = parseInput(input);
@@ -110,6 +110,7 @@ public class Board {
      * Parses the user input into numerical values.
      * @param coord Takes in the user's inputted coordinate (i.e. 'E4').
      * @return Returns the corresponding numerical value for the input in an integer[] (i.e. [5, 4] for 'E4').
+     * @throws IncorrectChessInputException If the input is not in the correct format, this exception is thrown.
      */
     private int[] parseInput(String coord) throws IncorrectChessInputException {
         int[] coordinates = new int[2];
