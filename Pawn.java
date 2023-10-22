@@ -22,8 +22,7 @@ public class Pawn extends ChessPiece {
         for (ChessPiece piece : currentBoard.getActivePieces()) {
             activePieces[piece.getRankPosition()][piece.getFilePosition()] = piece;
         }
-
-        // 
+        
         for (int i = 1; i <= 2; i++) {
             int[] coords = new int[2];
             if (black) {

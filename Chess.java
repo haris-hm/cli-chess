@@ -24,7 +24,7 @@ public class Chess {
             }
 
             try {
-                board.play(selectedCoord, isBlacksTurn);
+                board.play(selectedCoord, isBlacksTurn, keyboard);
                 isBlacksTurn = !isBlacksTurn;
             }
             catch (IncorrectChessInputException e) {

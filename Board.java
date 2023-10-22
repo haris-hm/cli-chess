@@ -95,14 +95,14 @@ public class Board {
      * Selects the piece to be moved.
      * @param isBlack If the current play is for black or white.
      */
-    public void play(String input, boolean isBlack) throws IncorrectChessInputException {
+    public void play(String input, boolean isBlack, Scanner keyboard) throws IncorrectChessInputException {
         int[] desiredPiece = parseInput(input);
         ChessPiece chosenPiece; 
 
         for (ChessPiece piece : activePieces) {
             if (piece.getRankPosition() == desiredPiece[0] && piece.getFilePosition() == desiredPiece[1] && piece.isBlack() == isBlack) {
                 chosenPiece = piece;
-                movePieceToDesiredPos(chosenPiece);
+                movePieceToDesiredPos(chosenPiece, keyboard);
             }
             else if (piece.getRankPosition() == desiredPiece[0] && piece.getFilePosition() == desiredPiece[1] && piece.isBlack() != isBlack) {
                 throw new IncorrectChessInputException("Desired piece is not your piece!");
@@ -110,8 +110,7 @@ public class Board {
         }
     }
 
-    private void movePieceToDesiredPos(ChessPiece chosenPiece) {
-        Scanner keyboard = new Scanner(System.in);
+    private void movePieceToDesiredPos(ChessPiece chosenPiece, Scanner keyboard) {
         ArrayList<int[]> possibleMoves = chosenPiece.calculateValidBoardMoves(this);
 
         System.out.println("Here are your possible moves for that chosen piece:");

@@ -25,9 +25,9 @@ public abstract class ChessPiece{
     }
 
     /**
-     * Calculates the valid moves for the piece.
-     * @param currentBoard The current chess board. Used to figure out the positions of other pieces in case of capture.
-     * @return
+     * Calculates valid moves for this piece type.
+     * @param currentBoard The current playing board.
+     * @return An ArrayList of valid moves.
      */
     public abstract ArrayList<int[]> calculateValidBoardMoves(Board currentBoard);
 
