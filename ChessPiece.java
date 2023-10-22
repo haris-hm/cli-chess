@@ -31,6 +31,9 @@ public abstract class ChessPiece{
 
     /**
      * @return The symbol of the piece. If the piece is black, it colors its output using ANSI codes, if it's white, it returns just the symbol.
+     * Used to figure out how to color the text that is output:
+     * https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
+     * https://www.geeksforgeeks.org/how-to-print-colored-text-in-java-console/
      */
     public String toString() {
         if (black) {
