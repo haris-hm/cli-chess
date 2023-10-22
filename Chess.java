@@ -8,6 +8,9 @@ public class Chess {
         boolean gameActive = true;
         boolean isBlacksTurn = false;
 
+        board.getActivePieces().get(3).movePiece(2, 3);
+        board.getActivePieces().get(4).movePiece(3, 3);
+
         while (gameActive) {
             System.out.println(board);
             System.out.println("Please select a piece by typing its board coordinate (i.e. 'E4') or type \"Q\" to quit the game:");
@@ -22,12 +25,11 @@ public class Chess {
 
             try {
                 board.play(selectedCoord, isBlacksTurn);
+                isBlacksTurn = !isBlacksTurn;
             }
             catch (IncorrectChessInputException e) {
                 System.out.println(e.getMessage());
             }
-
-            isBlacksTurn = !isBlacksTurn;
         }
     }
 }

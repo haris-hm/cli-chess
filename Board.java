@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Board {
     private ArrayList<ChessPiece> activePieces;
@@ -91,19 +92,38 @@ public class Board {
     }
 
     /**
-     * The main method for moving and capturing pieces. Selects the piece to be moved.
+     * Selects the piece to be moved.
      * @param isBlack If the current play is for black or white.
      */
     public void play(String input, boolean isBlack) throws IncorrectChessInputException {
         int[] desiredPiece = parseInput(input);
-        ChessPiece chosenPiece;
+        ChessPiece chosenPiece; 
 
         for (ChessPiece piece : activePieces) {
-            if (piece.getRankPosition() == desiredPiece[0] && piece.getFilePosition() == desiredPiece[1]) {
+            if (piece.getRankPosition() == desiredPiece[0] && piece.getFilePosition() == desiredPiece[1] && piece.isBlack() == isBlack) {
                 chosenPiece = piece;
-                System.out.println(chosenPiece.getRankPosition() + " " + chosenPiece.getFilePosition() + " " + chosenPiece);
+                movePieceToDesiredPos(chosenPiece);
+            }
+            else if (piece.getRankPosition() == desiredPiece[0] && piece.getFilePosition() == desiredPiece[1] && piece.isBlack() != isBlack) {
+                throw new IncorrectChessInputException("Desired piece is not your piece!");
             }
         }
+    }
+
+    private void movePieceToDesiredPos(ChessPiece chosenPiece) {
+        Scanner keyboard = new Scanner(System.in);
+        ArrayList<int[]> possibleMoves = chosenPiece.calculateValidBoardMoves(this);
+
+        System.out.println("Here are your possible moves for that chosen piece:");
+        System.out.println(possibleMovesRepresentation(possibleMoves));
+    }
+
+    private String possibleMovesRepresentation(ArrayList<int[]> moves) {
+        String returnStr = "";
+        for (int[] move : moves) {
+            returnStr += String.format("%d, %d\n", move[0], move[1]);
+        }
+        return returnStr;
     }
 
     /**
@@ -128,10 +148,10 @@ public class Board {
         }
 
         // Checking to see if the letter and the number are in the range of A-H and 1-8
-        if (coordinates[0] <= 1 || coordinates[0] >= 8){
+        if (coordinates[0] < 1 || coordinates[0] > 8){
             throw new IncorrectChessInputException("Coordinate that was inputted is out of bounds.");
         }
-        else if (coordinates[1] <= 1 || coordinates[1] >= 8) {
+        else if (coordinates[1] < 1 || coordinates[1] > 8) {
             throw new IncorrectChessInputException("Coordinate that was inputted is out of bounds.");
         }
 

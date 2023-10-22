@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Pawn extends ChessPiece {
 
     /**
@@ -10,13 +12,66 @@ public class Pawn extends ChessPiece {
      */
     public Pawn(boolean black, int rankPosition, int filePosition) {
         super("Pawn", "p", black, rankPosition, filePosition);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
-    public String calculateValidBoardMoves(Board currentBoard) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calculateValidBoardMoves'");
+    public ArrayList<int[]> calculateValidBoardMoves(Board currentBoard) {
+        ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
+        ChessPiece[][] activePieces = new ChessPiece[9][9];
+
+        for (ChessPiece piece : currentBoard.getActivePieces()) {
+            activePieces[piece.getRankPosition()][piece.getFilePosition()] = piece;
+        }
+
+        // 
+        for (int i = 1; i <= 2; i++) {
+            int[] coords = new int[2];
+            if (black) {
+                coords[0] = rankPosition; coords[1] = filePosition - i;
+            }
+            else {
+                coords[0] = rankPosition; coords[1] = filePosition + i;
+            }
+
+            // If the pawn wouldn't go out of bounds or isn't blocked by another piece, continue
+            if (coords[1] < 8 && coords[1] > 1 && activePieces[coords[0]][coords[1]] == null) {
+                // If the possible move is adding 2 or removing 2 from the file position
+                if(coords[1] == filePosition + 2 || coords[1] == filePosition - 2) {
+                    // Add the possible move only if the piece is at its starting position
+                    if (filePosition == 7 && black) {
+                        possibleMoves.add(coords);
+                    }
+                    else if (filePosition == 2 && !black) {
+                        possibleMoves.add(coords);
+                    }
+                    else {
+                        break;
+                    }
+                }
+                else { // If the move isn't adding or removing 2
+                    possibleMoves.add(coords);
+                }
+            }
+        }
+
+        // Checking to see if there's a piece to capture on the diagonals
+        for (int i = -1; i <= 1; i += 2) {
+            int[] coords = new int[2];
+            if (black) {
+                coords[0] = rankPosition + i; coords[1] = filePosition - 1;
+                if (activePieces[coords[0]][coords[1]] != null && !activePieces[coords[0]][coords[1]].isBlack()) {
+                    possibleMoves.add(coords);
+                }
+            }
+            else {
+                coords[0] = rankPosition + i; coords[1] = filePosition + 1;
+                if (activePieces[coords[0]][coords[1]] != null && activePieces[coords[0]][coords[1]].isBlack()) {
+                    possibleMoves.add(coords);
+                }
+            }
+        }
+
+        return possibleMoves;
     }
     
 }

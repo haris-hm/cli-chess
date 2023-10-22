@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Queen extends ChessPiece {
 
     /**
@@ -14,7 +16,7 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public String calculateValidBoardMoves(Board currentBoard) {
+    public ArrayList<int[]> calculateValidBoardMoves(Board currentBoard) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'calculateValidBoardMoves'");
     }

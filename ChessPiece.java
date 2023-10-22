@@ -1,10 +1,12 @@
+import java.util.ArrayList;
+
 public abstract class ChessPiece{
     private String name;
     private String symbol;
-    private boolean black;
 
-    private int rankPosition;
-    private int filePosition;
+    protected boolean black;
+    protected int rankPosition;
+    protected int filePosition;
 
     /**
      * Creates a new chess piece
@@ -27,7 +29,7 @@ public abstract class ChessPiece{
      * @param currentBoard The current chess board. Used to figure out the positions of other pieces in case of capture.
      * @return
      */
-    public abstract String calculateValidBoardMoves(Board currentBoard);
+    public abstract ArrayList<int[]> calculateValidBoardMoves(Board currentBoard);
 
     /**
      * @return The symbol of the piece. If the piece is black, it colors its output using ANSI codes, if it's white, it returns just the symbol.
