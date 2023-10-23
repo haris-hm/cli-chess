@@ -111,7 +111,8 @@ public class Board {
     }
 
     private void movePieceToDesiredPos(ChessPiece chosenPiece, Scanner keyboard) {
-        ArrayList<int[]> possibleMoves = chosenPiece.calculateValidBoardMoves(this);
+        ChessPiece[][] activePieces = activePieceArray();
+        ArrayList<int[]> possibleMoves = chosenPiece.calculateValidBoardMoves(activePieces);
 
         System.out.println("Here are your possible moves for that chosen piece:");
         System.out.println(possibleMovesRepresentation(possibleMoves));
@@ -123,6 +124,14 @@ public class Board {
             returnStr += String.format("%d, %d\n", move[0], move[1]);
         }
         return returnStr;
+    }
+
+    private ChessPiece[][] activePieceArray() {
+        ChessPiece[][] activePieces = new ChessPiece[9][9];
+        for (ChessPiece piece : this.getActivePieces()) {
+            activePieces[piece.getRankPosition()][piece.getFilePosition()] = piece;
+        }
+        return activePieces;
     }
 
     /**

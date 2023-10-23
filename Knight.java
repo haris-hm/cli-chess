@@ -15,15 +15,9 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public ArrayList<int[]> calculateValidBoardMoves(Board currentBoard) {
+    public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
-        ChessPiece[][] activePieces = new ChessPiece[9][9];
-
         int[][] validMoves = {{1, 2}, {2, 1}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}};
-
-        for (ChessPiece piece : currentBoard.getActivePieces()) {
-            activePieces[piece.getRankPosition()][piece.getFilePosition()] = piece;
-        }
 
         for (int i = 0; i < 8; i++) {
             int[] moveCoord = {rankPosition + validMoves[i][0], filePosition + validMoves[i][1]};

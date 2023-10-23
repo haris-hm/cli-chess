@@ -16,7 +16,7 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public ArrayList<int[]> calculateValidBoardMoves(Board currentBoard) {
+    public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'calculateValidBoardMoves'");
     }

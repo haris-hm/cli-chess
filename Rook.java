@@ -15,16 +15,11 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public ArrayList<int[]> calculateValidBoardMoves(Board currentBoard) {
+    public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
-        ChessPiece[][] activePieces = new ChessPiece[9][9];
 
         boolean posVerticalsFound, negVerticalsFound, rightHorizontalsFound, leftHorizontalsFound;
         posVerticalsFound = negVerticalsFound = rightHorizontalsFound = leftHorizontalsFound = false;
-
-        for (ChessPiece piece : currentBoard.getActivePieces()) {
-            activePieces[piece.getRankPosition()][piece.getFilePosition()] = piece;
-        }
 
         for (int i = 1; i <= 7; i++) {
             int[] posVerticalCoord = {rankPosition, filePosition + i}; int[] negVerticalCoord = {rankPosition, filePosition - i};

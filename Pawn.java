@@ -15,13 +15,8 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public ArrayList<int[]> calculateValidBoardMoves(Board currentBoard) {
+    public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
-        ChessPiece[][] activePieces = new ChessPiece[9][9];
-
-        for (ChessPiece piece : currentBoard.getActivePieces()) {
-            activePieces[piece.getRankPosition()][piece.getFilePosition()] = piece;
-        }
         
         for (int i = 1; i <= 2; i++) {
             int[] coords = new int[2];

@@ -29,7 +29,7 @@ public abstract class ChessPiece{
      * @param currentBoard The current playing board.
      * @return An ArrayList of valid moves.
      */
-    public abstract ArrayList<int[]> calculateValidBoardMoves(Board currentBoard);
+    public abstract ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces);
 
     /**
      * @return The symbol of the piece. If the piece is black, it colors its output using ANSI codes, if it's white, it returns just the symbol.

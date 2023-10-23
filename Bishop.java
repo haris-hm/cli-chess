@@ -16,9 +16,10 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public ArrayList<int[]> calculateValidBoardMoves(Board currentBoard) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calculateValidBoardMoves'");
+    public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
+        ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
+
+        return possibleMoves;
     }
     
 }
