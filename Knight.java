@@ -17,22 +17,9 @@ public class Knight extends ChessPiece {
     @Override
     public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
+        
         int[][] validMoves = {{1, 2}, {2, 1}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}};
-
-        for (int i = 0; i < 8; i++) {
-            int[] moveCoord = {rankPosition + validMoves[i][0], filePosition + validMoves[i][1]};
-
-            if (moveCoord[0] <= 8 && moveCoord[0] >= 1 && moveCoord[1] <= 8 && moveCoord[1] >= 1) {
-                if (activePieces[moveCoord[0]][moveCoord[1]] != null && activePieces[moveCoord[0]][moveCoord[1]].isBlack() != this.isBlack()) {
-                    possibleMoves.add(moveCoord);
-                }
-                else if (activePieces[moveCoord[0]][moveCoord[1]] != null && activePieces[moveCoord[0]][moveCoord[1]].isBlack() == this.isBlack()){
-                    continue;
-                }
-
-                possibleMoves.add(moveCoord);
-            }
-        }
+        this.calculateCustom(activePieces, possibleMoves, validMoves);
 
         return possibleMoves;
     }

@@ -26,7 +26,7 @@ public abstract class ChessPiece{
 
     /**
      * Calculates valid moves for this piece type.
-     * @param currentBoard The current playing board.
+     * @param activePieces The pieces currently on the board placed in a 2D array according to their coordinates on the board.
      * @return An ArrayList of valid moves.
      */
     public abstract ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces);
@@ -57,8 +57,93 @@ public abstract class ChessPiece{
     }
 
     /**
+     * Calculates horizontal and vertical movement for rooks and queens.
+     * @param activePieces The current active pieces placed in a 2D array according to their board coordinates.
+     * @param possibleMoves The piece's current list of possible moves which this method will add to.
+     */
+    protected void calculateVerticalsAndHorizonatals(ChessPiece[][] activePieces, ArrayList<int[]> possibleMoves) {
+        boolean posVerticalsFound, negVerticalsFound, rightHorizontalsFound, leftHorizontalsFound;
+        posVerticalsFound = negVerticalsFound = rightHorizontalsFound = leftHorizontalsFound = false;
+
+        for (int i = 1; i <= 7; i++) {
+            int[] posVerticalCoord = {rankPosition, filePosition + i}; int[] negVerticalCoord = {rankPosition, filePosition - i};
+            int[] rightHorizontalCoord = {rankPosition + i, filePosition}; int[] leftHorizontalCoord = {rankPosition - i, filePosition};
+
+            if (posVerticalCoord[1] <= 8) { // Checking board coordinates above this piece.
+                posVerticalsFound = validatePotentialMove(activePieces, possibleMoves, posVerticalCoord, posVerticalsFound);
+            }
+
+            if (rightHorizontalCoord[0] <= 8) { // Checking board coordinates to the right of this piece.
+                rightHorizontalsFound = validatePotentialMove(activePieces, possibleMoves, rightHorizontalCoord, rightHorizontalsFound);
+            }
+
+            if (negVerticalCoord[1] >= 1) { // Checking board coordinates below this piece.
+                negVerticalsFound = validatePotentialMove(activePieces, possibleMoves, negVerticalCoord, negVerticalsFound);
+            }
+
+            if (leftHorizontalCoord[0] >= 1) { // Checking board coordinates to the left of this piece.
+                leftHorizontalsFound = validatePotentialMove(activePieces, possibleMoves, leftHorizontalCoord, leftHorizontalsFound);
+            }
+        }
+    }
+
+    /**
+     * Calculates diagonal movement for bishops and queens.
+     * @param activePieces The current active pieces placed in a 2D array according to their board coordinates.
+     * @param possibleMoves The piece's current list of possible moves which this method will add to.
+     */
+    protected void calculateDiagonals(ChessPiece[][] activePieces, ArrayList<int[]> possibleMoves) {
+        boolean rightPositivesFound, rightNegativesFound, leftPositivesFound, leftNegativesFound;
+        rightPositivesFound = rightNegativesFound = leftPositivesFound = leftNegativesFound = false;
+
+        for (int i = 1; i <= 7; i++) {
+            int[] rightPositiveDiagonal = {rankPosition + i, filePosition + i}; int[] rightNegativeDiagonal = {rankPosition + i, filePosition - i};
+            int[] leftPositiveDiagonal = {rankPosition - i, filePosition + i}; int[] leftNegativeDiagonal = {rankPosition - i, filePosition - i};
+
+            if (rightPositiveDiagonal[0] <= 8 && rightPositiveDiagonal[1] <= 8) { // Checking board coordinates on the diagonal going up and to the right.
+                rightPositivesFound = validatePotentialMove(activePieces, possibleMoves, rightPositiveDiagonal, rightPositivesFound);
+            }
+
+            if (rightNegativeDiagonal[0] <= 8 && rightNegativeDiagonal[1] >= 1) { // Checking board coordinates on the diagonal going down and to the right.
+                rightNegativesFound = validatePotentialMove(activePieces, possibleMoves, rightNegativeDiagonal, rightNegativesFound);
+            }
+
+            if (leftPositiveDiagonal[0] >= 1 && leftPositiveDiagonal[1] <= 8) { // Checking board coordinates on the diagonal going up and to the left.
+                leftPositivesFound = validatePotentialMove(activePieces, possibleMoves, leftPositiveDiagonal, leftPositivesFound);
+            }
+
+            if (leftNegativeDiagonal[0] >= 1 && leftNegativeDiagonal[1] >= 1) { // Checking board coordinates on the diagonal going down and to the left.
+                leftNegativesFound = validatePotentialMove(activePieces, possibleMoves, leftNegativeDiagonal, leftNegativesFound);
+            }
+        }
+    }
+
+    /**
+     * Calculates movement from a set list of moves. Used for the king and knight.
+     * @param activePieces The current active pieces placed in a 2D array according to their board coordinates.
+     * @param possibleMoves The piece's current list of possible moves which this method will add to.
+     * @param validMoves The list of valid moves for the piece.
+     */
+    protected void calculateCustom(ChessPiece[][] activePieces, ArrayList<int[]> possibleMoves, int[][] validMoves) {
+        for (int i = 0; i < validMoves.length; i++) {
+            int[] moveCoord = {rankPosition + validMoves[i][0], filePosition + validMoves[i][1]};
+
+            if (moveCoord[0] <= 8 && moveCoord[0] >= 1 && moveCoord[1] <= 8 && moveCoord[1] >= 1) {
+                if (activePieces[moveCoord[0]][moveCoord[1]] != null && activePieces[moveCoord[0]][moveCoord[1]].isBlack() != this.isBlack()) {
+                    possibleMoves.add(moveCoord);
+                }
+                else if (activePieces[moveCoord[0]][moveCoord[1]] != null && activePieces[moveCoord[0]][moveCoord[1]].isBlack() == this.isBlack()){
+                    continue;
+                }
+
+                possibleMoves.add(moveCoord);
+            }
+        }
+    }
+
+    /**
      * @return The symbol of the piece. If the piece is black, it colors its output using ANSI codes, if it's white, it returns just the symbol.
-     * Used to figure out how to color the text that is output:
+     * @see Used to figure out how to color the text that is output:
      * https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
      * https://www.geeksforgeeks.org/how-to-print-colored-text-in-java-console/
      */

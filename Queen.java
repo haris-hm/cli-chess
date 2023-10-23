@@ -12,13 +12,16 @@ public class Queen extends ChessPiece {
      */
     public Queen(boolean black, int rankPosition, int filePosition) {
         super("Queen", "Q", black, rankPosition, filePosition);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
     public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calculateValidBoardMoves'");
+        ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
+
+        this.calculateDiagonals(activePieces, possibleMoves);
+        this.calculateVerticalsAndHorizonatals(activePieces, possibleMoves);
+
+        return possibleMoves;
     }
     
 }
