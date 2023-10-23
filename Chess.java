@@ -10,6 +10,7 @@ public class Chess {
 
         board.getActivePieces().get(3).movePiece(2, 3);
         board.getActivePieces().get(4).movePiece(3, 3);
+        board.getActivePieces().get(10).movePiece(5, 5);
 
         while (gameActive) {
             System.out.println(board);

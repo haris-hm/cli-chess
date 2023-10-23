@@ -32,6 +32,31 @@ public abstract class ChessPiece{
     public abstract ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces);
 
     /**
+     * Checks the if the possible move is a valid move.
+     * @param activePieces Active board pieces in a 2D array.
+     * @param possibleMoves The current list of possible moves.
+     * @param moveCoord The possible move coordinate that we're checking now.
+     * @param correspondingFound The corresponding boolean to check whether all of the possible moves have been found in a row or column.
+     * @return True if all the valid moves have been found in a row or column.
+     */
+    protected boolean validatePotentialMove (ChessPiece[][] activePieces, ArrayList<int[]> possibleMoves, int[] moveCoord, boolean correspondingFound) {
+        if (activePieces[moveCoord[0]][moveCoord[1]] != null) { // Is there an active piece in the coordinate that we're checking?
+            if (activePieces[moveCoord[0]][moveCoord[1]].isBlack() != this.isBlack() && !correspondingFound) { // Is that piece the opposite color? 
+                possibleMoves.add(moveCoord); // Add it to the possible moves
+                return true; // Stop checking this line
+            }
+            else if (activePieces[moveCoord[0]][moveCoord[1]].isBlack() == this.isBlack()) { // If it is the same color, stop checking this line without adding the move.
+                return true;
+            }
+        }
+        else if (!correspondingFound){ // If the possible coordinate is empty, add it.
+            possibleMoves.add(moveCoord);
+        }
+
+        return correspondingFound;
+    }
+
+    /**
      * @return The symbol of the piece. If the piece is black, it colors its output using ANSI codes, if it's white, it returns just the symbol.
      * Used to figure out how to color the text that is output:
      * https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
