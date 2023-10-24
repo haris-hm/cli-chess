@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * The rook chess piece. Contains the calculation for its valid moves.
+ * @author Haris Mehuljic
+ */
 public class Rook extends ChessPiece {
 
     /**
@@ -18,6 +22,7 @@ public class Rook extends ChessPiece {
     public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
 
+        // The rook can move horizontally or vertically in any direction.
         this.calculateVerticalsAndHorizonatals(activePieces, possibleMoves);
         
         return possibleMoves;
