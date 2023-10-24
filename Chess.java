@@ -1,10 +1,13 @@
 import java.util.Scanner;
 
 /**
- * @author Haris Mehuljic
  * A chess game which displays a representation of the chess board in the terminal and
- * takes in user input in order to move and capture pieces. There is no check or checkmate
- * detection.
+ * takes in user input in order to move and capture pieces. The game calculates valid
+ * moves for the user's selected piece and displays it to the user for them to choose 
+ * were to move the piece. There is no check/checkmate detection or any special moves
+ * such as castling or turning a pawn into another piece when it reaches it's maximum
+ * file position.
+ * @author Haris Mehuljic
  */
 public class Chess {
     public static void main(String[] args) {

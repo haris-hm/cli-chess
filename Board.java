@@ -106,7 +106,30 @@ public class Board {
         }
 
         // Adding the bottom to the board grid and the letters representing columns.
-        boardRepresentation += " └─┴─┴─┴─┴─┴─┴─┴─┘\n  a b c d e f g h\n";
+        boardRepresentation += " └─┴─┴─┴─┴─┴─┴─┴─┘\n  A B C D E F G H\n\n";
+
+        // Creating the representation for the captured pieces
+        if (capturedPieces.size() == 0) {
+            boardRepresentation += "\n Captured Pieces: None\n";
+        }
+        else {
+            boardRepresentation += "Captured Pieces:\n";
+            String temp1 = "┌";
+            String temp2 = "│";
+            String temp3 = "└";
+
+            for (ChessPiece capturedPiece : capturedPieces) {
+                temp1 += "──";
+                temp2 += capturedPiece + " ";
+                temp3 += "──";
+            }
+
+            temp1 += "\b┐\n";
+            temp2 += "\b│\n";
+            temp3 += "\b┘\n";
+
+            boardRepresentation += temp1 + temp2 + temp3;
+        }
 
         return boardRepresentation;
     }
@@ -217,7 +240,7 @@ public class Board {
             if (i != 7) { boardRepresentation += " ├─┼─┼─┼─┼─┼─┼─┼─┤\n"; }
         }
 
-        boardRepresentation += " └─┴─┴─┴─┴─┴─┴─┴─┘\n  a b c d e f g h\n Please type the coordinates of the move you would like to make.";       
+        boardRepresentation += " └─┴─┴─┴─┴─┴─┴─┴─┘\n  A B C D E F G H\n Please type the coordinates of the move you would like to make (or press 'enter' to choose another piece).";       
 
         return boardRepresentation;
     }

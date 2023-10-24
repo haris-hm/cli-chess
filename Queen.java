@@ -28,5 +28,4 @@ public class Queen extends ChessPiece {
 
         return possibleMoves;
     }
-    
 }

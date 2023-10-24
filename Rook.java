@@ -27,7 +27,4 @@ public class Rook extends ChessPiece {
         
         return possibleMoves;
     }
-
-
-    
 }
