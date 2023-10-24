@@ -1,6 +1,13 @@
 import java.util.ArrayList;
 
-public abstract class ChessPiece{
+/**
+ * The main class for chess pieces. All piece variants inherit from this.
+ * Contains the toString representation for the piece, defines an abstract method
+ * for each subclass which is used to calculate valid moves for each variant, and 
+ * contains methods for calculating common moves that multiple pieces make.
+ * @author Haris Mehuljic
+ */
+public abstract class ChessPiece {
     private String name;
     private String symbol;
 
@@ -65,7 +72,9 @@ public abstract class ChessPiece{
         boolean posVerticalsFound, negVerticalsFound, rightHorizontalsFound, leftHorizontalsFound;
         posVerticalsFound = negVerticalsFound = rightHorizontalsFound = leftHorizontalsFound = false;
 
+        // The maximum amount of spaces any piece can move if it is completely unobstructed is 7
         for (int i = 1; i <= 7; i++) {
+            // All the possible move coordinates
             int[] posVerticalCoord = {rankPosition, filePosition + i}; int[] negVerticalCoord = {rankPosition, filePosition - i};
             int[] rightHorizontalCoord = {rankPosition + i, filePosition}; int[] leftHorizontalCoord = {rankPosition - i, filePosition};
 
@@ -96,7 +105,9 @@ public abstract class ChessPiece{
         boolean rightPositivesFound, rightNegativesFound, leftPositivesFound, leftNegativesFound;
         rightPositivesFound = rightNegativesFound = leftPositivesFound = leftNegativesFound = false;
 
+        // The maximum amount of spaces any piece can move if it is completely unobstructed is 7
         for (int i = 1; i <= 7; i++) {
+            // All the possible move coordinates
             int[] rightPositiveDiagonal = {rankPosition + i, filePosition + i}; int[] rightNegativeDiagonal = {rankPosition + i, filePosition - i};
             int[] leftPositiveDiagonal = {rankPosition - i, filePosition + i}; int[] leftNegativeDiagonal = {rankPosition - i, filePosition - i};
 
@@ -126,16 +137,18 @@ public abstract class ChessPiece{
      */
     protected void calculateCustom(ChessPiece[][] activePieces, ArrayList<int[]> possibleMoves, int[][] validMoves) {
         for (int i = 0; i < validMoves.length; i++) {
-            int[] moveCoord = {rankPosition + validMoves[i][0], filePosition + validMoves[i][1]};
+            int[] moveCoord = {rankPosition + validMoves[i][0], filePosition + validMoves[i][1]}; // Adds the current valid move to the piece's rank and file position
 
-            if (moveCoord[0] <= 8 && moveCoord[0] >= 1 && moveCoord[1] <= 8 && moveCoord[1] >= 1) {
-                if (activePieces[moveCoord[0]][moveCoord[1]] != null && activePieces[moveCoord[0]][moveCoord[1]].isBlack() != this.isBlack()) {
-                    possibleMoves.add(moveCoord);
+            if (moveCoord[0] <= 8 && moveCoord[0] >= 1 && moveCoord[1] <= 8 && moveCoord[1] >= 1) { // Is the move that's being checked inside the bounds of the board?
+                if (activePieces[moveCoord[0]][moveCoord[1]] != null && activePieces[moveCoord[0]][moveCoord[1]].isBlack() != this.isBlack()) { // Is there a piece currently in the spot that's the opposite color?
+                    // Add it to the list of possible moves because it can be captured
+                    possibleMoves.add(moveCoord); 
                 }
-                else if (activePieces[moveCoord[0]][moveCoord[1]] != null && activePieces[moveCoord[0]][moveCoord[1]].isBlack() == this.isBlack()){
-                    continue;
+                else if (activePieces[moveCoord[0]][moveCoord[1]] != null && activePieces[moveCoord[0]][moveCoord[1]].isBlack() == this.isBlack()){ // Is there a piece of the same color obstructing the path?
+                    continue; // Do nothing
                 }
 
+                // Otherwise, add the move
                 possibleMoves.add(moveCoord);
             }
         }

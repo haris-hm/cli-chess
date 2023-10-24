@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * The bishop chess piece. Contains the calculation for its valid moves.
+ * @author Haris Mehuljic
+ */
 public class Bishop extends ChessPiece {
 
     /**
@@ -18,6 +22,7 @@ public class Bishop extends ChessPiece {
     public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
 
+        // The bishop can move diagonally in any direction.
         this.calculateDiagonals(activePieces, possibleMoves);
         
         return possibleMoves;

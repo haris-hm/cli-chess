@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * The king chess piece. Contains the calculation for its valid moves.
+ * @author Haris Mehuljic
+ */
 public class King extends ChessPiece {
 
     /**
@@ -18,6 +22,7 @@ public class King extends ChessPiece {
     public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
 
+        // The king can only move one space in any direction, as long as it's unobstructed
         int[][] validMoves = {{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}};
         this.calculateCustom(activePieces, possibleMoves, validMoves);
 

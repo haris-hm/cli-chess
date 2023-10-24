@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * The pawn chess piece. Contains the calculation for its valid moves.
+ * @author Haris Mehuljic
+ */
 public class Pawn extends ChessPiece {
 
     /**

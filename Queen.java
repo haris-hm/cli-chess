@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * The queen chess piece. Contains the calculation for its valid moves.
+ * @author Haris Mehuljic
+ */
 public class Queen extends ChessPiece {
 
     /**
@@ -18,6 +22,7 @@ public class Queen extends ChessPiece {
     public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
 
+        // The queen can move diagonally, horizontally, or vertically in any direction.
         this.calculateDiagonals(activePieces, possibleMoves);
         this.calculateVerticalsAndHorizonatals(activePieces, possibleMoves);
 

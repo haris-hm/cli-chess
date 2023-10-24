@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * The knight chess piece. Contains the calculation for its valid moves.
+ * @author Haris Mehuljic
+ */
 public class Knight extends ChessPiece {
 
     /**
@@ -18,6 +22,7 @@ public class Knight extends ChessPiece {
     public ArrayList<int[]> calculateValidBoardMoves(ChessPiece[][] activePieces) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         
+        // The knight can move in an l shape: 2 spaces in one direction, one in another.
         int[][] validMoves = {{1, 2}, {2, 1}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}};
         this.calculateCustom(activePieces, possibleMoves, validMoves);
 
